@@ -3,6 +3,7 @@
 
 import cmd
 import os
+import ast
 import json
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
@@ -137,6 +138,51 @@ class HBNBCommand(cmd.Cmd):
             is_first = False
         print("]")
 
-
+    def do_update(self, line):
+        """
+            Updates an instance based on the class name
+            and id by adding or updating attribute 
+        """
+        if not line:
+            print("** class name missing **")
+            return
+        Class = line.split()[0]
+        Class = globals().get(Class)
+        if not Class or not issubclass(Class, BaseModel):
+            print("** class doesn't exist **")
+            return
+        if len(line.split()) < 2:
+            print("** instance id missing **")
+            return
+        if len(line.split()) < 3:
+            print("** attribute name missing **")
+            return
+        if len(line.split()) < 4:
+            print("** value missing **")
+            return       
+        all_obj = {}
+        search_id = f"{line.split()[0]}.{line.split()[1]}"
+        attrib_name = line.split()[2]
+        att_value = line.split()[3].strip('"')
+        fileName = FileStorage._FileStorage__file_path
+        if os.path.exists(fileName) and os.path.isfile(fileName):
+            with open(fileName, 'r') as file:
+                all_obj = json.load(file)
+                if search_id not in all_obj:
+                    print("** no instance found **")
+                    return
+        value = all_obj[search_id]
+        if attrib_name in value:
+            try:
+                a_type = type(attrib_name).__name__
+                att_value = ast.literal_eval(a_type + "('" + att_value + "')")
+            except (ValueError, SyntaxError):
+                pass
+            value[attrib_name] = att_value
+        else:
+            value[attrib_name] = att_value
+        with open(fileName, "w") as file:
+            json.dump(all_obj, file)
+        
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
