@@ -100,8 +100,12 @@ class HBNBCommand(cmd.Cmd):
                     print("** no instance found **")
                     return
                 del all_obj[search_id]
+                objects = FileStorage._FileStorage__objects
+                del objects[search_id]
                 with open(fileName, "w") as file:
                     json.dump(all_obj, file)
+                    return
+        print("** no instance found **")
 
     def do_all(self, line):
         """
@@ -125,6 +129,8 @@ class HBNBCommand(cmd.Cmd):
             class_name, obj_id = key.split(".")
             obj_dict = value
             obj_dict.pop('__class__', None)
+            if line and line.split()[0] != class_name:
+                continue
             if not is_first:
                 print(", ", end='')
             print(f"\"[{class_name}] ({obj_id}) {obj_dict}\"", end='')
