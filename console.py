@@ -3,6 +3,7 @@
 
 import cmd
 import os
+import sys
 import ast
 import json
 from models.base_model import BaseModel
@@ -18,7 +19,9 @@ from uuid import uuid4
 
 
 class HBNBCommand(cmd.Cmd):
-    prompt = "(hbtn) "
+    prompt = ""
+    if sys.stdin.isatty() and sys.stdout.isatty():
+        prompt = "(hbtn) "
 
     def do_EOF(self, line):
         "Ctrl + D to exit the program"
@@ -189,6 +192,43 @@ class HBNBCommand(cmd.Cmd):
             value[attrib_name] = att_value
         with open(fileName, "w") as file:
             json.dump(all_obj, file)
-        
+    
+    def do_count(self, line):
+        """
+        command to retrieve the number of instances of a class: 
+        Usage : <class name>.count().
+        """
+        if line:
+            ClassName = line.split()[0]
+            Class = globals().get(ClassName)
+            if not Class or not issubclass(Class, BaseModel):
+                print("** class doesn't exist **")
+                return
+        objects = FileStorage._FileStorage__objects
+        c = 0
+        for key, value in objects.items():
+            Class_Name = key.split(".")[0]
+            if Class_Name == ClassName:
+                c += 1
+        print(c)
+                
+    def default(self, line):
+        """
+        called on an input line when the command prefix is not recognized
+        """
+        if line:
+            class_name = line.split(".", 1)[0]
+            _cmd = line.split(".", 1)[1]
+            if _cmd in ["all", "all()", "count", "count()"]:
+                if _cmd.endswith('()'):
+                    _cmd = _cmd[:-2]
+                method_name = f'do_{_cmd}'
+                if hasattr(self, method_name) and callable(getattr(self, method_name)):
+                    method = getattr(self, method_name)
+                    method(class_name)
+            id_start = _cmd.find("(")
+            cmd_name = _cmd[:id_start]
+            
+
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
