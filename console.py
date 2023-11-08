@@ -235,7 +235,27 @@ class HBNBCommand(cmd.Cmd):
                 if hasattr(self, meth) and callable(getattr(self, meth)):
                     method = getattr(self, meth)
                     method(f"{class_name} {id}")
-            
+            if cmd_name == "update" and _cmd.endswith(")"):
+                parts = _cmd[len("update("):-1].split(", ")
+                if len(parts) == 0:
+                    args = ""
+                if len(parts) == 1:
+                    id = parts[0].strip('\"')
+                    args = f"{id}" 
+                if len(parts) == 2:
+                    id = parts[0].strip('\"')
+                    field = parts[1].strip('\"')
+                    args = f"{id} {field}"
+                if len(parts) == 3:
+                    id = parts[0].strip('\"')
+                    field = parts[1].strip('\"')
+                    value = parts[2].strip('\"')
+                    args = f"{id} {field} {value}"
+
+                meth = f'do_update'
+                if hasattr(self, meth) and callable(getattr(self, meth)):
+                    method = getattr(self, meth)
+                    method(f"{class_name} {args}")
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
