@@ -228,6 +228,13 @@ class HBNBCommand(cmd.Cmd):
                     method(class_name)
             id_start = _cmd.find("(")
             cmd_name = _cmd[:id_start]
+            if cmd_name in ["show", "destroy"] and _cmd.endswith(")"):
+                id_end = _cmd.rfind(")")
+                id = _cmd[id_start + 1:id_end].strip("\"")
+                meth = f'do_{cmd_name}'
+                if hasattr(self, meth) and callable(getattr(self, meth)):
+                    method = getattr(self, meth)
+                    method(f"{class_name} {id}")
             
 
 if __name__ == '__main__':
