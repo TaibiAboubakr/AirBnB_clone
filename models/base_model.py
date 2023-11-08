@@ -4,7 +4,7 @@
 from uuid import uuid4
 from datetime import datetime
 import models
-""" BaseModelModel calss """
+""" BaseModel calss """
 
 
 class BaseModel:

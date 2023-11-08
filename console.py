@@ -6,6 +6,7 @@ import os
 import ast
 import json
 from models.base_model import BaseModel
+from models.user import User
 from models.engine.file_storage import FileStorage
 from uuid import uuid4
 """ HBNBCommand class for cmd moudule """
@@ -34,7 +35,7 @@ class HBNBCommand(cmd.Cmd):
         Class = line.split()[0]
         Class = globals().get(Class)
         if Class and issubclass(Class, BaseModel):
-            my_model = BaseModel()
+            my_model = Class()
             my_model.save()
             print(my_model.id)
         else:
