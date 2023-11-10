@@ -7,6 +7,8 @@ from io import StringIO
 import sys
 from console import HBNBCommand
 
+""" TesttheHBNBPrompt class """
+
 
 class TesttheHBNBPrompt(unittest.TestCase):
     """testing the hbnb prompt and the emptyline"""
@@ -29,7 +31,7 @@ class TestHBNBCommandEntryPoint(unittest.TestCase):
             self.assertEqual(use, output.getvalue().strip())
 
     def test_quit(self):
-        use = "Quit command to quit the program"
+        use = "Quit command to exit the program"
         with patch('sys.stdout', new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("help quit"))
             self.assertEqual(use, output.getvalue().strip())
@@ -37,7 +39,7 @@ class TestHBNBCommandEntryPoint(unittest.TestCase):
     def test_create(self):
         use = (
                 "create <class>\n"
-                "creates a new instance id")
+                "create a new instance")
         with patch('sys.stdout', new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd(" help create"))
             self.assertEqual(use, output.getvalue().strip())
@@ -53,28 +55,60 @@ class TestHBNBCommandEntryPoint(unittest.TestCase):
     def test_destroy(self):
         use = (
                 "destroy <class> <isntance id>\n"
-                "deletes the class and its instance id")
+                "deletes an instance based on the class name and id\n"
+                "(save the change into the JSON file)")
         with patch('sys.stdout', new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd(" help destroy"))
             self.assertEqual(use, output.getvalue().strip())
 
     def test_all(self):
         use = (
-                "all or  all <class>\n"
-                "shows all classes and instances created")
+                "all or all <class>\n"
+                "all : show all instances created for all classes\n"
+                "all <class> : show all instances for specific class")
         with patch('sys.stdout', new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("help all"))
+            self.assertEqual(use, output.getvalue().strip())
+    
+    def test_count(self):
+        use = (
+                "Usage : <class name>.count().\n"
+                "command to retrieve the number of instances of a class")
+        with patch('sys.stdout', new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("help count"))
             self.assertEqual(use, output.getvalue().strip())
 
     def test_update(self):
         use = (
-                "update <class> <id> <attribute name> \"<attribute value>\"\n"
-                "updates an instance by adding new\n"
-                "attributes or updating existing ones")
+                "Usage : update <class> <id> <attribute name> <attribute value>\n"
+                "Usage : <class name>.update(<id>, <attribute name>, <attribute value>)\n"
+                "Usage : <class name>.update(<id>, <dictionary representation>)\n"
+                "Updates an instance based on the class name\n"
+                "and id by adding or updating attribute")
         with patch('sys.stdout', new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("help update"))
             self.assertEqual(use, output.getvalue().strip())
 
+    def test_quit_1(self):
+        """ test_quit_1 """
+        with patch('sys.stdout', new=StringIO()) as output:
+            try:
+                HBNBCommand().onecmd("quit")
+            except SystemExit:
+                pass
+            self.assertEqual("", output.getvalue().strip())
 
+    def test_emptyline(self):
+        """ test_emptyline"""
+        with patch('sys.stdout', new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd(""))
+            self.assertEqual("", output.getvalue().strip())
+
+    def test_create_BaseModel(self):
+        """ test_create_BaseModel """
+        pat = r"[0-9 a-f]{8}-[0-9 a-f]{4}-[0-9 a-f]{4}-[0-9 a-f]{4}-[0-9 a-f]{12}"
+        with patch('sys.stdout', new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("create BaseModel"))
+            self.assertRegex(output.getvalue().strip(), pat)
 if __name__ == "__main__":
     unittest.main()
