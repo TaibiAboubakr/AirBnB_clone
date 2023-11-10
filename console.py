@@ -19,12 +19,10 @@ from uuid import uuid4
 
 
 class HBNBCommand(cmd.Cmd):
-    prompt = ""
-    if sys.stdin.isatty() and sys.stdout.isatty():
-        prompt = "(hbtn) "
+    prompt = "(hbnb)"
 
     def do_EOF(self, line):
-        "Ctrl + D to exit the program"
+        "signal to exit the program using CTRL+D"
         return True
 
     def do_quit(self, line):
@@ -36,7 +34,7 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, line):
-        """ create a new instance """
+        """create <class>\ncreate a new instance"""
         if len(line.split()) != 1:
             print("** class name missing **")
             return
@@ -50,9 +48,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
 
     def do_show(self, line):
-        """
-            Prints the string representation of an
-            instance based on the class name and id
+        """show <class> <instance id>\nshows the class created
         """
         if not line:
             print("** class name missing **")
@@ -81,8 +77,9 @@ class HBNBCommand(cmd.Cmd):
         print("** no instance found **")
 
     def do_destroy(self, line):
-        """Deletes an instance based on the class name and id
-        (save the change into the JSON file)"""
+        """destroy <class> <isntance id>
+deletes an instance based on the class name and id
+(save the change into the JSON file)"""
         parts = line.split()
 
         if len(parts) < 1:
@@ -119,8 +116,10 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, line):
         """
-        Prints the string representation of all instances
-        based on the class name
+        all or all <class>
+all : show all instances created for all classes
+all <class> : show all instances for specific class
+
         """
         if line:
             Class = line.split()[0]
@@ -149,8 +148,11 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, line):
         """
-            Updates an instance based on the class name
-            and id by adding or updating attribute 
+        Usage : update <class> <id> <attribute name> <attribute value>
+Usage : <class name>.update(<id>, <attribute name>, <attribute value>)
+Usage : <class name>.update(<id>, <dictionary representation>)
+Updates an instance based on the class name
+and id by adding or updating attribute
         """
         if not line:
             print("** class name missing **")
@@ -195,8 +197,8 @@ class HBNBCommand(cmd.Cmd):
     
     def do_count(self, line):
         """
-        command to retrieve the number of instances of a class: 
         Usage : <class name>.count().
+command to retrieve the number of instances of a class
         """
         if line:
             ClassName = line.split()[0]
@@ -236,26 +238,31 @@ class HBNBCommand(cmd.Cmd):
                     method = getattr(self, meth)
                     method(f"{class_name} {id}")
             if cmd_name == "update" and _cmd.endswith(")"):
-                parts = _cmd[len("update("):-1].split(", ")
-                if len(parts) == 0:
-                    args = ""
-                if len(parts) == 1:
-                    id = parts[0].strip('\"')
-                    args = f"{id}" 
-                if len(parts) == 2:
-                    id = parts[0].strip('\"')
-                    field = parts[1].strip('\"')
-                    args = f"{id} {field}"
-                if len(parts) == 3:
-                    id = parts[0].strip('\"')
-                    field = parts[1].strip('\"')
-                    value = parts[2].strip('\"')
-                    args = f"{id} {field} {value}"
-
                 meth = f'do_update'
-                if hasattr(self, meth) and callable(getattr(self, meth)):
-                    method = getattr(self, meth)
-                    method(f"{class_name} {args}")
+                parts = _cmd[len("update("):-1].split(", ", 1)
+                if parts[1].startswith("{") and parts[1].endswith("}"):
+                    attr_dict = ast.literal_eval(parts[1])
+                    id = parts[0].strip('\"')
+                    for key, value in attr_dict.items():
+                        method = getattr(self, meth)
+                        method(f"{class_name} {id} {key} {value}")
+                else:
+                    parts = _cmd[len("update("):-1].split(", ")
+                    if len(parts) == 0:
+                        args = ""
+                    if len(parts) >= 1:
+                        id = parts[0].strip('\"')
+                        args = f"{id}" 
+                    if len(parts) >= 2:
+                        field = parts[1].strip('\"')
+                        args = f"{id} {field}"
+                    if len(parts) == 3:
+                        value = parts[2].strip('\"')
+                        args = f"{id} {field} {value}"
+
+                    if hasattr(self, meth) and callable(getattr(self, meth)):
+                        method = getattr(self, meth)
+                        method(f"{class_name} {args}")
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
