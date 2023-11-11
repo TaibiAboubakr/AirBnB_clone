@@ -3,6 +3,7 @@
 
 import cmd
 import os
+import re
 import sys
 import ast
 import json
@@ -83,7 +84,7 @@ deletes an instance based on the class name and id
         parts = line.split()
 
         if len(parts) < 1:
-            print("** class name missing **")
+            print("** class name is missing **")
             return
         class_name = parts[0]
         obj_id = parts[1] if len(parts) > 1 else None
@@ -94,7 +95,7 @@ deletes an instance based on the class name and id
             return
 
         if not obj_id:
-            print("** instance id missing **")
+            print("** instance id is missing **")
             return
         all_obj = {}
         search_id = f"{class_name}.{obj_id}"
@@ -173,6 +174,10 @@ and id by adding or updating attribute
             return
         all_obj = {}
         search_id = f"{line.split()[0]}.{line.split()[1]}"
+        pat = r"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
+        if not re.match(pat, search_id.split(".")[1]):
+            print("** no instance found **")
+            return
         attrib_name = line.split()[2]
         att_value = line.split()[3].strip('"')
         fileName = FileStorage._FileStorage__file_path
@@ -248,6 +253,7 @@ command to retrieve the number of instances of a class
                         method(f"{class_name} {id} {key} {value}")
                 else:
                     parts = _cmd[len("update("):-1].split(", ")
+                    print("IN UPDATE")
                     if len(parts) == 0:
                         args = ""
                     if len(parts) >= 1:
@@ -259,7 +265,6 @@ command to retrieve the number of instances of a class
                     if len(parts) == 3:
                         value = parts[2].strip('\"')
                         args = f"{id} {field} {value}"
-
                     if hasattr(self, meth) and callable(getattr(self, meth)):
                         method = getattr(self, meth)
                         method(f"{class_name} {args}")
