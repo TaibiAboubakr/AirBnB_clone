@@ -275,6 +275,48 @@ class TestHBNBCommandEntryPoint(unittest.TestCase):
             pat = r"\[Place\] \({id}\) {{'id': '{id}', 'created_at': '{created_at}', 'updated_at': '{updated_at}'}}"
             self.assertFalse(HBNBCommand().onecmd("Place.show()"))
             self.assertRegex(output.getvalue().strip(), pat)
+    
+    def test_Review_count(self):
+        """testing the Review.count() command """
+        with patch('sys.stdout', new=StringIO()) as output:
+            pat = r"\d+"
+            self.assertFalse(HBNBCommand().onecmd("Review.count()"))
+            self.assertRegex(output.getvalue().strip(), pat)
+
+    def test_User_count(self):
+        """testing the User.count() command """
+        with patch('sys.stdout', new=StringIO()) as output:
+            pat = r"\d+"
+            self.assertFalse(HBNBCommand().onecmd("User.count()"))
+            self.assertRegex(output.getvalue().strip(), pat)
+
+    def test_State_count(self):
+        """testing the State.count command """
+        with patch('sys.stdout', new=StringIO()) as output:
+            pat = r"\d+"
+            self.assertFalse(HBNBCommand().onecmd("State.count()"))
+            self.assertRegex(output.getvalue().strip(), pat)
+
+    def test_City_count(self):
+        """testing the City.count() command """
+        with patch('sys.stdout', new=StringIO()) as output:
+            pat = r"\d+"
+            self.assertFalse(HBNBCommand().onecmd("City.count()"))
+            self.assertRegex(output.getvalue().strip(), pat)
+
+    def test_Amenity_count(self):
+        """testing the Amenity.count() command """
+        with patch('sys.stdout', new=StringIO()) as output:
+            pat = r"\d+"
+            self.assertFalse(HBNBCommand().onecmd("Amenity.count()"))
+            self.assertRegex(output.getvalue().strip(), pat)
+
+    def test_Place_count(self):
+        """testing the Place.count() command """
+        with patch('sys.stdout', new=StringIO()) as output:
+            pat = r"\d+"
+            self.assertFalse(HBNBCommand().onecmd("Place.count()"))
+            self.assertRegex(output.getvalue().strip(), pat)
 if __name__ == "__main__":
     unittest.main()
 
