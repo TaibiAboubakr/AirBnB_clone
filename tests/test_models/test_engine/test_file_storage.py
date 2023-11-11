@@ -29,11 +29,18 @@ class TestingFileStorage(unittest.TestCase):
 
     def test_objects(self):
         fs = FileStorage()
+        objects = FileStorage._FileStorage__objects
+        self.assertIsInstance(objects, dict)
+        self.assertTrue(hasattr(fs, '_FileStorage__objects'))
+
+    def test_file_path(self):
+        fs = FileStorage()
         file_path = FileStorage._FileStorage__file_path
         self.assertIsInstance(file_path, str)
         self.assertTrue(hasattr(fs, '_FileStorage__file_path'))
-
-
+    
+    def test_all(self):
+        self.assertEqual(dict, type(models.storage.all()))
 
     def test_save(self):
         obj_base = BaseModel()
