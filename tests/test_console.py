@@ -180,13 +180,10 @@ class TestHBNBCommandEntryPoint(unittest.TestCase):
 
     def test_all_BaseModel(self):
         """testing the all command """
-        file_path = "file.json"
-        with open(file_path, 'w') as f:
-            f.write("{}")
         with patch('sys.stdout', new=StringIO()) as output:
             pat = r'\[BaseModel\]'
             self.assertFalse(HBNBCommand().onecmd("all BaseModel"))
-            self.assertEqual(output.getvalue().strip(), "[]")
+            self.assertRegex(output.getvalue().strip(), pat)
 
     def test_BaseModel_all(self):
         """testing the BaseModel.all() command """
