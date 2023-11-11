@@ -19,6 +19,10 @@ class TestingFileStorage(unittest.TestCase):
     testing the class FileStorage if it exists
     with its attributes and checking its type
     """
+
+    def setUp(self):
+        pass
+
     def test_storage_init(self):
         self.assertEqual(type(models.storage), FileStorage)
 
