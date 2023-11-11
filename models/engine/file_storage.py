@@ -15,11 +15,14 @@ from models.review import Review
 
 class FileStorage:
     """ FileStorage class """
+
     __file_path = "file.json"
     __objects = {}
+
     def all(self):
         """ returns the dictionary __objects """
         return (FileStorage.__objects)
+
     def new(self, obj):
         """ sets in __objects the obj with key <obj class name>.id """
         key = f"{obj.__class__.__name__}.{obj.id}"
@@ -30,7 +33,7 @@ class FileStorage:
         tmp = {}
         for key, value in FileStorage.__objects.items():
             tmp[key] = value.to_dict()
-        with open(FileStorage.__file_path, 'w') as file:          
+        with open(FileStorage.__file_path, 'w') as file:
             json.dump(tmp, file)
 
     def reload(self):
@@ -47,6 +50,3 @@ class FileStorage:
                     class_obj = globals()[ClassName]
                     obj = class_obj(**value)
                     self.new(obj)
-
- 
-            
