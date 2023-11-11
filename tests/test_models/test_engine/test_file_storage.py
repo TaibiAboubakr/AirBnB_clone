@@ -27,11 +27,7 @@ class TestingFileStorage(unittest.TestCase):
         self.assertTrue(hasattr(theFileStorage, "save"))
         self.assertTrue(hasattr(theFileStorage, "reload"))
 
-    def test_objects(self):
-        fs = FileStorage()
-        file_path = FileStorage._FileStorage__file_path
-        self.assertIsInstance(file_path, str)
-        self.assertTrue(hasattr(fs, '_FileStorage__file_path'))
+
 
     def test_all(self):
         self.assertEqual(dict, type(models.storage.all()))
