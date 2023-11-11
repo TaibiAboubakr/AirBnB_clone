@@ -94,7 +94,7 @@ deletes an instance based on the class name and id
             return
 
         if not obj_id:
-            print("** instance id is missing **")
+            print("** instance id missing **")
             return
         all_obj = {}
         search_id = f"{class_name}.{obj_id}"
