@@ -21,10 +21,10 @@ class TestingFileStorage(unittest.TestCase):
     """
     def test_storage_init(self):
         self.assertEqual(type(models.storage), FileStorage)
-    
+
     def test_FileStorage_type(self):
         self.assertEqual(type(FileStorage()), FileStorage)
-    
+
     def test_FileStorage(self):
         theFileStorage = FileStorage()
         self.assertTrue(hasattr(theFileStorage, "all"))
@@ -43,7 +43,7 @@ class TestingFileStorage(unittest.TestCase):
         file_path = FileStorage._FileStorage__file_path
         self.assertIsInstance(file_path, str)
         self.assertTrue(hasattr(fs, '_FileStorage__file_path'))
-    
+
     def test_all(self):
         self.assertEqual(dict, type(models.storage.all()))
 
@@ -72,6 +72,7 @@ class TestingFileStorage(unittest.TestCase):
         self.assertIn(f"City.{obj_city.id}", data)
         self.assertIn(f"Review.{obj_review.id}", data)
         self.assertIn(f"Place.{obj_place.id}", data)
+
     def test_reload(self):
         obj_base = BaseModel()
         obj_User = User()
@@ -97,8 +98,6 @@ class TestingFileStorage(unittest.TestCase):
         self.assertIn(f"City.{obj_city.id}", objs)
         self.assertIn(f"Review.{obj_review.id}", objs)
         self.assertIn(f"Place.{obj_place.id}", objs)
-     
-
 
 
 if __name__ == "__main__":
