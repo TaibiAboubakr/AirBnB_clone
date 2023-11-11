@@ -106,6 +106,12 @@ class TestingFileStorage(unittest.TestCase):
         self.assertIn(f"Review.{obj_review.id}", objs)
         self.assertIn(f"Place.{obj_place.id}", objs)
 
+    def test_reload_empty(self):
+        with open("file.json", 'w') as file:
+            file.write('{}')
+        models.storage.reload()
+        self.assertEqual({}, models.storage.all())
+
 
 if __name__ == "__main__":
     unittest.main()
