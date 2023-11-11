@@ -253,7 +253,6 @@ command to retrieve the number of instances of a class
                         method(f"{class_name} {id} {key} {value}")
                 else:
                     parts = _cmd[len("update("):-1].split(", ")
-                    print("IN UPDATE")
                     if len(parts) == 0:
                         args = ""
                     if len(parts) >= 1:
