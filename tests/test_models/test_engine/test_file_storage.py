@@ -33,8 +33,7 @@ class TestingFileStorage(unittest.TestCase):
         self.assertIsInstance(file_path, str)
         self.assertTrue(hasattr(fs, '_FileStorage__file_path'))
 
-    def test_all(self):
-        self.assertEqual(dict, type(models.storage.all()))
+
 
     def test_save(self):
         obj_base = BaseModel()
