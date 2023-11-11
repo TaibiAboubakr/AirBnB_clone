@@ -23,6 +23,9 @@ class TestingFileStorage(unittest.TestCase):
     def setUp(self):
         pass
 
+    def tearDown(self):
+        pass
+
     def test_storage_init(self):
         self.assertEqual(type(models.storage), FileStorage)
 
