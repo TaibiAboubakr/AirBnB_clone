@@ -170,7 +170,7 @@ and id by adding or updating attribute
             return
         if len(line.split()) < 4:
             print("** value missing **")
-            return       
+            return
         all_obj = {}
         search_id = f"{line.split()[0]}.{line.split()[1]}"
         attrib_name = line.split()[2]
@@ -194,7 +194,7 @@ and id by adding or updating attribute
             value[attrib_name] = att_value
         with open(fileName, "w") as file:
             json.dump(all_obj, file)
-    
+
     def do_count(self, line):
         """
         Usage : <class name>.count().
@@ -213,7 +213,7 @@ command to retrieve the number of instances of a class
             if Class_Name == ClassName:
                 c += 1
         print(c)
-                
+
     def default(self, line):
         """
         called on an input line when the command prefix is not recognized
@@ -224,9 +224,9 @@ command to retrieve the number of instances of a class
             if _cmd in ["all", "all()", "count", "count()"]:
                 if _cmd.endswith('()'):
                     _cmd = _cmd[:-2]
-                method_name = f'do_{_cmd}'
-                if hasattr(self, method_name) and callable(getattr(self, method_name)):
-                    method = getattr(self, method_name)
+                meth = f'do_{_cmd}'
+                if hasattr(self, meth) and callable(getattr(self, meth)):
+                    method = getattr(self, meth)
                     method(class_name)
             id_start = _cmd.find("(")
             cmd_name = _cmd[:id_start]
@@ -252,7 +252,7 @@ command to retrieve the number of instances of a class
                         args = ""
                     if len(parts) >= 1:
                         id = parts[0].strip('\"')
-                        args = f"{id}" 
+                        args = f"{id}"
                     if len(parts) >= 2:
                         field = parts[1].strip('\"')
                         args = f"{id} {field}"
@@ -263,6 +263,7 @@ command to retrieve the number of instances of a class
                     if hasattr(self, meth) and callable(getattr(self, meth)):
                         method = getattr(self, meth)
                         method(f"{class_name} {args}")
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
