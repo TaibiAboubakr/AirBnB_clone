@@ -15,7 +15,8 @@ class BaseModel:
             Args:
                 id (str(uuid)): id of the new instance
         """
-
+        if args is not None and len(args) > 0:
+            pass
         if not kwargs:
             self.id = str(uuid4())
             self.created_at = datetime.now()
