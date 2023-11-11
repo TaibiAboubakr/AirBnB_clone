@@ -233,6 +233,48 @@ class TestHBNBCommandEntryPoint(unittest.TestCase):
             pat = r"\[Place\] \({id}\) {{'id': '{id}', 'created_at': '{created_at}', 'updated_at': '{updated_at}'}}"
             self.assertFalse(HBNBCommand().onecmd("Place.all()"))
             self.assertRegex(output.getvalue().strip(), pat)
+    
+    def test_Review_show(self):
+        """testing the Review.show() command """
+        with patch('sys.stdout', new=StringIO()) as output:
+            pat = r"\[Review\] \({id}\) {{'id': '{id}', 'created_at': '{created_at}', 'updated_at': '{updated_at}'}}"
+            self.assertFalse(HBNBCommand().onecmd("Review.show()"))
+            self.assertRegex(output.getvalue().strip(), pat)
+
+    def test_User_show(self):
+        """testing the User.show() command """
+        with patch('sys.stdout', new=StringIO()) as output:
+            pat = r"\[User\] \({id}\) {{'id': '{id}', 'created_at': '{created_at}', 'updated_at': '{updated_at}'}}"
+            self.assertFalse(HBNBCommand().onecmd("User.show()"))
+            self.assertRegex(output.getvalue().strip(), pat)
+
+    def test_State_show(self):
+        """testing the State.show command """
+        with patch('sys.stdout', new=StringIO()) as output:
+            pat = r"\[State\] \({id}\) {{'id': '{id}', 'created_at': '{created_at}', 'updated_at': '{updated_at}'}}"
+            self.assertFalse(HBNBCommand().onecmd("State.show()"))
+            self.assertRegex(output.getvalue().strip(), pat)
+
+    def test_City_show(self):
+        """testing the City.show() command """
+        with patch('sys.stdout', new=StringIO()) as output:
+            pat = r"\[City\] \({id}\) {{'id': '{id}', 'created_at': '{created_at}', 'updated_at': '{updated_at}'}}"
+            self.assertFalse(HBNBCommand().onecmd("City.show()"))
+            self.assertRegex(output.getvalue().strip(), pat)
+
+    def test_Amenity_show(self):
+        """testing the Amenity.show() command """
+        with patch('sys.stdout', new=StringIO()) as output:
+            pat = r"\[Amenity\] \({id}\) {{'id': '{id}', 'created_at': '{created_at}', 'updated_at': '{updated_at}'}}"
+            self.assertFalse(HBNBCommand().onecmd("Amenity.show()"))
+            self.assertRegex(output.getvalue().strip(), pat)
+
+    def test_Place_show(self):
+        """testing the Place.show() command """
+        with patch('sys.stdout', new=StringIO()) as output:
+            pat = r"\[Place\] \({id}\) {{'id': '{id}', 'created_at': '{created_at}', 'updated_at': '{updated_at}'}}"
+            self.assertFalse(HBNBCommand().onecmd("Place.show()"))
+            self.assertRegex(output.getvalue().strip(), pat)
 if __name__ == "__main__":
     unittest.main()
 
