@@ -408,6 +408,13 @@ class TestHBNBCommandEntryPoint(unittest.TestCase):
         self.assertFalse(HBNBCommand().onecmd(command))
         self.assertEqual(user_obj.name, "John")
 
+    def test_update_State(self):
+        state_obj = State()
+        id = state_obj.id
+        command = f'update State {id} state_name "California"'
+        self.assertFalse(HBNBCommand().onecmd(command))
+        self.assertEqual(state_obj.state_name, "California")
+
 
 if __name__ == "__main__":
     unittest.main()
