@@ -400,6 +400,14 @@ class TestHBNBCommandEntryPoint(unittest.TestCase):
         self.assertFalse(HBNBCommand().onecmd(command))
         self.assertEqual(bm_obj.age, "20")
 
+    def test_update_User(self):
+        user_obj = User()
+        id = user_obj.id
+        command = f'update User {id} name "John"'
+        user_obj.update("name", "John")
+        self.assertFalse(HBNBCommand().onecmd(command))
+        self.assertEqual(user_obj.name, "John")
+
 
 if __name__ == "__main__":
     unittest.main()
