@@ -429,6 +429,13 @@ class TestHBNBCommandEntryPoint(unittest.TestCase):
         self.assertFalse(HBNBCommand().onecmd(command))
         self.assertEqual(amenity_obj.type, "WiFi")
 
+    def test_update_Place(self):
+        place_obj = Place()
+        id = place_obj.id
+        command = f'update Place {id} address "123 Main St"'
+        self.assertFalse(HBNBCommand().onecmd(command))
+        self.assertEqual(place_obj.address, "123 Main St")
+
 
 if __name__ == "__main__":
     unittest.main()
