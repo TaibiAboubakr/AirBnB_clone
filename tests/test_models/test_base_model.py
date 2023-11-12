@@ -18,15 +18,17 @@ class TestingBaseModel(unittest.TestCase):
         self.assertTrue(hasattr(theBaseModel, "save"))
         self.assertTrue(hasattr(theBaseModel, "to_dict"))
 
-        self.assertTrue(hasattr(theBaseModel, "id"))
-        self.assertTrue(hasattr(theBaseModel, "created_at"))
-        self.assertTrue(hasattr(theBaseModel, "updated_at"))
+    def test_BaseModel_attributes(self):
+        bm1 = BaseModel()
+        self.assertTrue(hasattr(bm1, "id"))
+        self.assertTrue(hasattr(bm1, "created_at"))
+        self.assertTrue(hasattr(bm1, "updated_at"))
 
     def test_BaseModel_types(self):
-        theBaseModel = BaseModel()
-        self.assertIsInstance(theBaseModel.id, str)
-        self.assertIsInstance(theBaseModel.created_at, datetime)
-        self.assertIsInstance(theBaseModel.updated_at, datetime)
+        bm3 = BaseModel()
+        self.assertIsInstance(bm3.id, str)
+        self.assertIsInstance(bm3.created_at, datetime)
+        self.assertIsInstance(bm3.updated_at, datetime)
 
 
 if __name__ == "__main__":
