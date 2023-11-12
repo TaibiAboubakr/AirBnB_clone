@@ -87,12 +87,12 @@ class TestHBNBCommandEntryPoint(unittest.TestCase):
 
     def test_update(self):
         use = (
-            "Usage : update <class> <id> <attribute name> <attribute value>\n"
-            "Usage : <class name>.update(<id>, <attribute name>,"
-            " <attribute value>)\n"
-            "Usage : <class name>.update(<id>, <dictionary representation>)\n"
-            "Updates an instance based on the class name\n"
-            "and id by adding or updating attribute")
+                "To : update <class> <id> <attribute name> <attribute value>\n"
+                "Usage : <class name>.update(<id>, <attribute name>,"
+                " <attribute value>)\n"
+                "To : <class name>.update(<id>, <dictionary representation>)\n"
+                "Updates an instance based on the class name\n"
+                "and id by adding or updating attribute")
         with patch('sys.stdout', new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("help update"))
             self.assertEqual(use, output.getvalue().strip())
@@ -129,34 +129,44 @@ class TestHBNBCommandEntryPoint(unittest.TestCase):
     def test_show_BaseModel(self):
         """ test_show_BaseModel """
         inst = BaseModel()
-        pat = r"\[BaseModel\] \({id}\) {{'id': '{id}', 'created_at': '{created_at}', 'updated_at': '{updated_at}'}}"
+        pattern_start = r'\[BaseModel\] \({id}\) {{'
+        pattern_values = r"'id': '{id}', 'created_at': '{created_at}',"
+        pattern_end = r" 'updated_at' : '{updated_at}'}}"
+        pat = pattern_start + pattern_values + pattern_end
         self.assertEqual(type(inst.id), str)
         with patch('sys.stdout', new=StringIO()) as output:
-            self.assertFalse(HBNBCommand().onecmd(f"show BaseModel {inst.id}"))
-            self.assertEqual(output.getvalue().strip(), "** no instance found **")
+            self.assertTrue(HBNBCommand().onecmd(f"show BaseModel {inst.id}"))
+            self.assertEqual(output.getvalue().strip(), pat)
 
     def test_destroy_BaseModel(self):
         """testing the destroy command"""
         inst1 = BaseModel()
         command = f"destroy BaseModel {inst1.id}"
+        given = "** no instance found **"
         with patch('sys.stdout', new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd(command))
-            self.assertEqual(output.getvalue().strip(), "** no instance found **")
+            self.assertEqual(output.getvalue().strip(), given)
 
     def test_all_BaseModel(self):
         """testing the all command """
         with patch('sys.stdout', new=StringIO()) as output:
-            pat = r"\[BaseModel\] \({id}\) {{'id': '{id}', 'created_at': '{created_at}', 'updated_at': '{updated_at}'}}"
+            pattern_start = r'\[BaseModel\] \({id}\) {{'
+            pattern_values = r"'id': '{id}', 'created_at': '{created_at}',"
+            pattern_end = r" 'updated_at' : '{updated_at}'}}"
+            pat = pattern_start + pattern_values + pattern_end
             self.assertFalse(HBNBCommand().onecmd("all BaseModel"))
             self.assertRegex(output.getvalue().strip(), pat)
 
     def test_BaseModel_all(self):
         """testing the BaseModel.all() command """
         with patch('sys.stdout', new=StringIO()) as output:
-            pat = "[BaseModel] ({id}\) {{'id': '{id}', 'created_at': '{created_at}', 'updated_at': '{updated_at}'}}"
+            pattern_start = r'\[BaseModel\] \({id}\) {{'
+            pattern_values = r"'id': '{id}', 'created_at': '{created_at}',"
+            pattern_end = r" 'updated_at' : '{updated_at}'}}"
+            pat = pattern_start + pattern_values + pattern_end
             self.assertFalse(HBNBCommand().onecmd("BaseModel.all()"))
             self.assertRegex(output.getvalue().strip(), pat)
-    
+
     def test_create_Review(self):
         """Test creating a Review instance"""
         pat = r"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
@@ -195,87 +205,123 @@ class TestHBNBCommandEntryPoint(unittest.TestCase):
     def test_Review_all(self):
         """testing the Review.all() command """
         with patch('sys.stdout', new=StringIO()) as output:
-            pat = r"\[Review\] \({id}\) {{'id': '{id}', 'created_at': '{created_at}', 'updated_at': '{updated_at}'}}"
+            pattern_start = r'\[Review\] \({id}\) {{'
+            pattern_values = r"'id': '{id}', 'created_at': '{created_at}',"
+            pattern_end = r" 'updated_at' : '{updated_at}'}}"
+            pat = pattern_start + pattern_values + pattern_end
             self.assertFalse(HBNBCommand().onecmd("Review.all()"))
             self.assertRegex(output.getvalue().strip(), pat)
 
     def test_User_all(self):
         """testing the User.all() command """
         with patch('sys.stdout', new=StringIO()) as output:
-            pat = r"\[User\] \({id}\) {{'id': '{id}', 'created_at': '{created_at}', 'updated_at': '{updated_at}'}}"
+            pattern_start = r'\[User\] \({id}\) {{'
+            pattern_values = r"'id': '{id}', 'created_at': '{created_at}',"
+            pattern_end = r" 'updated_at' : '{updated_at}'}}"
+            pat = pattern_start + pattern_values + pattern_end
             self.assertFalse(HBNBCommand().onecmd("User.all()"))
             self.assertRegex(output.getvalue().strip(), pat)
 
     def test_State_all(self):
         """testing the State.all command """
         with patch('sys.stdout', new=StringIO()) as output:
-            pat = r"\[State\] \({id}\) {{'id': '{id}', 'created_at': '{created_at}', 'updated_at': '{updated_at}'}}"
+            pattern_start = r'\[State\] \({id}\) {{'
+            pattern_values = r"'id': '{id}', 'created_at': '{created_at}',"
+            pattern_end = r" 'updated_at' : '{updated_at}'}}"
+            pat = pattern_start + pattern_values + pattern_end
             self.assertFalse(HBNBCommand().onecmd("State.all()"))
             self.assertRegex(output.getvalue().strip(), pat)
 
     def test_City_all(self):
         """testing the City.all() command """
         with patch('sys.stdout', new=StringIO()) as output:
-            pat = r"\[City\] \({id}\) {{'id': '{id}', 'created_at': '{created_at}', 'updated_at': '{updated_at}'}}"
+            pattern_start = r'\[City\] \({id}\) {{'
+            pattern_values = r"'id': '{id}', 'created_at': '{created_at}',"
+            pattern_end = r" 'updated_at' : '{updated_at}'}}"
+            pat = pattern_start + pattern_values + pattern_end
             self.assertFalse(HBNBCommand().onecmd("City.all()"))
             self.assertRegex(output.getvalue().strip(), pat)
 
     def test_Amenity_all(self):
         """testing the Amenity.all() command """
         with patch('sys.stdout', new=StringIO()) as output:
-            pat = r"\[Amenity\] \({id}\) {{'id': '{id}', 'created_at': '{created_at}', 'updated_at': '{updated_at}'}}"
+            pattern_start = r'\[Amenity\] \({id}\) {{'
+            pattern_values = r"'id': '{id}', 'created_at': '{created_at}',"
+            pattern_end = r" 'updated_at' : '{updated_at}'}}"
+            pat = pattern_start + pattern_values + pattern_end
             self.assertFalse(HBNBCommand().onecmd("Amenity.all()"))
             self.assertRegex(output.getvalue().strip(), pat)
 
     def test_Place_all(self):
         """testing the Place.all() command """
         with patch('sys.stdout', new=StringIO()) as output:
-            pat = r"\[Place\] \({id}\) {{'id': '{id}', 'created_at': '{created_at}', 'updated_at': '{updated_at}'}}"
+            pattern_start = r'\[Place\] \({id}\) {{'
+            pattern_values = r"'id': '{id}', 'created_at': '{created_at}',"
+            pattern_end = r" 'updated_at' : '{updated_at}'}}"
+            pat = pattern_start + pattern_values + pattern_end
             self.assertFalse(HBNBCommand().onecmd("Place.all()"))
             self.assertRegex(output.getvalue().strip(), pat)
-    
+
     def test_Review_show(self):
         """testing the Review.show() command """
         with patch('sys.stdout', new=StringIO()) as output:
-            pat = r"\[Review\] \({id}\) {{'id': '{id}', 'created_at': '{created_at}', 'updated_at': '{updated_at}'}}"
+            pattern_start = r'\[Review\] \({id}\) {{'
+            pattern_values = r"'id': '{id}', 'created_at': '{created_at}',"
+            pattern_end = r" 'updated_at' : '{updated_at}'}}"
+            pat = pattern_start + pattern_values + pattern_end
             self.assertFalse(HBNBCommand().onecmd("Review.show()"))
             self.assertRegex(output.getvalue().strip(), pat)
 
     def test_User_show(self):
         """testing the User.show() command """
         with patch('sys.stdout', new=StringIO()) as output:
-            pat = r"\[User\] \({id}\) {{'id': '{id}', 'created_at': '{created_at}', 'updated_at': '{updated_at}'}}"
+            pattern_start = r'\[User\] \({id}\) {{'
+            pattern_values = r"'id': '{id}', 'created_at': '{created_at}',"
+            pattern_end = r" 'updated_at' : '{updated_at}'}}"
+            pat = pattern_start + pattern_values + pattern_end
             self.assertFalse(HBNBCommand().onecmd("User.show()"))
             self.assertRegex(output.getvalue().strip(), pat)
 
     def test_State_show(self):
         """testing the State.show command """
         with patch('sys.stdout', new=StringIO()) as output:
-            pat = r"\[State\] \({id}\) {{'id': '{id}', 'created_at': '{created_at}', 'updated_at': '{updated_at}'}}"
+            pattern_start = r'\[State\] \({id}\) {{'
+            pattern_values = r"'id': '{id}', 'created_at': '{created_at}',"
+            pattern_end = r" 'updated_at' : '{updated_at}'}}"
+            pat = pattern_start + pattern_values + pattern_end
             self.assertFalse(HBNBCommand().onecmd("State.show()"))
             self.assertRegex(output.getvalue().strip(), pat)
 
     def test_City_show(self):
         """testing the City.show() command """
         with patch('sys.stdout', new=StringIO()) as output:
-            pat = r"\[City\] \({id}\) {{'id': '{id}', 'created_at': '{created_at}', 'updated_at': '{updated_at}'}}"
+            pattern_start = r'\[City\] \({id}\) {{'
+            pattern_values = r"'id': '{id}', 'created_at': '{created_at}',"
+            pattern_end = r" 'updated_at' : '{updated_at}'}}"
+            pat = pattern_start + pattern_values + pattern_end
             self.assertFalse(HBNBCommand().onecmd("City.show()"))
             self.assertRegex(output.getvalue().strip(), pat)
 
     def test_Amenity_show(self):
         """testing the Amenity.show() command """
         with patch('sys.stdout', new=StringIO()) as output:
-            pat = r"\[Amenity\] \({id}\) {{'id': '{id}', 'created_at': '{created_at}', 'updated_at': '{updated_at}'}}"
+            pattern_start = r'\[Amenity\] \({id}\) {{'
+            pattern_values = r"'id': '{id}', 'created_at': '{created_at}',"
+            pattern_end = r" 'updated_at' : '{updated_at}'}}"
+            pat = pattern_start + pattern_values + pattern_end
             self.assertFalse(HBNBCommand().onecmd("Amenity.show()"))
             self.assertRegex(output.getvalue().strip(), pat)
 
     def test_Place_show(self):
         """testing the Place.show() command """
         with patch('sys.stdout', new=StringIO()) as output:
-            pat = r"\[Place\] \({id}\) {{'id': '{id}', 'created_at': '{created_at}', 'updated_at': '{updated_at}'}}"
+            pattern_start = r'\[Place\] \({id}\) {{'
+            pattern_values = r"'id': '{id}', 'created_at': '{created_at}',"
+            pattern_end = r" 'updated_at' : '{updated_at}'}}"
+            pat = pattern_start + pattern_values + pattern_end
             self.assertFalse(HBNBCommand().onecmd("Place.show()"))
             self.assertRegex(output.getvalue().strip(), pat)
-    
+
     def test_Review_count(self):
         """testing the Review.count() command """
         with patch('sys.stdout', new=StringIO()) as output:
@@ -325,7 +371,7 @@ class TestHBNBCommandEntryPoint(unittest.TestCase):
         command = f'BaseModel.update("{id}", "age", "20")'
         self.assertFalse(HBNBCommand().onecmd(command))
         self.assertEqual(bm_obj.age, "20")
-        
+
     def test_User_update(self):
         """Testing update method for User"""
         user_obj = User()
@@ -446,4 +492,3 @@ class TestHBNBCommandEntryPoint(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-
