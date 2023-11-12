@@ -14,12 +14,12 @@ class TestingBaseModel(unittest.TestCase):
     def test_BaseModel_methods(self):
         theBaseModel = BaseModel()
         self.assertTrue(hasattr(theBaseModel, "__init__"))
-        self.asserTrue(hasattr(theBaseModel, "__str__"))
+        self.assertTrue(hasattr(theBaseModel, "__str__"))
         self.assertTrue(hasattr(theBaseModel, "save"))
         self.assertTrue(hasattr(theBaseModel, "to_dict"))
 
         self.assertTrue(hasattr(theBaseModel, "id"))
-        self.asserTrue(hasattr(theBaseModel, "created_at"))
+        self.assertTrue(hasattr(theBaseModel, "created_at"))
         self.assertTrue(hasattr(theBaseModel, "updated_at"))
 
     def test_BaseModel_types(self):
