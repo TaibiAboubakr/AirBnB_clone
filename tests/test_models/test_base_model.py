@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""testing the BaseModel class"""
+"""testing the class BasseModel"""
 
 import unittest
 from models.base_model import BaseModel
@@ -8,21 +8,23 @@ from datetime import datetime
 
 class TestingBaseModel(unittest.TestCase):
     """
-    testing the class BaseModel if it exists
-    with its attributes and checking its type
+    testing the class BaseModel if it exists with its
+    methods, attributes and checking its types
     """
-
-    def test_BaseModel(self):
+    def test_BaseModel_methods(self):
         theBaseModel = BaseModel()
-        self.assertTrue(hasattr(theBaseModel, "name"))
+        self.assertTrue(hasattr(theBaseModel, "__init__"))
+        self.asserTrue(hasattr(theBaseModel, "__str__"))
+        self.assertTrue(hasattr(theBaseModel, "save"))
+        self.assertTrue(hasattr(theBaseModel, "to_dict"))
+
         self.assertTrue(hasattr(theBaseModel, "id"))
-        self.assertTrue(hasattr(theBaseModel, "state_id"))
-        self.assertTrue(hasattr(theBaseModel, "created_at"))
+        self.asserTrue(hasattr(theBaseModel, "created_at"))
         self.assertTrue(hasattr(theBaseModel, "updated_at"))
 
-        self.assertIsInstance(theBaseModel.name, str)
+    def test_BaseModel_types(self):
+        theBaseModel = BaseModel()
         self.assertIsInstance(theBaseModel.id, str)
-        self.assertIsInstance(theBaseModel.state_id, str)
         self.assertIsInstance(theBaseModel.created_at, datetime)
         self.assertIsInstance(theBaseModel.updated_at, datetime)
 
