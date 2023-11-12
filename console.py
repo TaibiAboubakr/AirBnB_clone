@@ -84,7 +84,7 @@ deletes an instance based on the class name and id
         parts = line.split()
 
         if len(parts) < 1:
-            print("** class name is missing **")
+            print("** class name missing **")
             return
         class_name = parts[0]
         obj_id = parts[1] if len(parts) > 1 else None
@@ -95,7 +95,7 @@ deletes an instance based on the class name and id
             return
 
         if not obj_id:
-            print("** instance id is missing **")
+            print("** instance id missing **")
             return
         all_obj = {}
         search_id = f"{class_name}.{obj_id}"
