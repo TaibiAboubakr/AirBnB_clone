@@ -11,7 +11,7 @@ class TestingBaseModel(unittest.TestCase):
     testing the class BaseModel if it exists with its
     methods, attributes and checking its types
     """
-    def test_BaseModel_methods(self):
+    def test_BaseModel(self):
         theBaseModel = BaseModel()
         self.assertTrue(hasattr(theBaseModel, "__init__"))
         self.assertTrue(hasattr(theBaseModel, "__str__"))
