@@ -386,6 +386,12 @@ class TestHBNBCommandEntryPoint(unittest.TestCase):
             self.assertFalse(HBNBCommand().onecmd("destroy"))
             self.assertEqual(valid, output.getvalue().strip())
 
+    def test_update_missingclass(self):
+        valid = "** class name missing **"
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("update"))
+            self.assertEqual(valid, output.getvalue().strip())
+
 
 if __name__ == "__main__":
     unittest.main()
