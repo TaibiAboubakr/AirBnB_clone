@@ -436,6 +436,13 @@ class TestHBNBCommandEntryPoint(unittest.TestCase):
         self.assertFalse(HBNBCommand().onecmd(command))
         self.assertEqual(place_obj.address, "123 Main St")
 
+    def test_update_Review(self):
+        review_obj = Review()
+        id = review_obj.id
+        command = f'update Review {id} rating "5"'
+        self.assertFalse(HBNBCommand().onecmd(command))
+        self.assertEqual(review_obj.rating, "5")
+
 
 if __name__ == "__main__":
     unittest.main()
