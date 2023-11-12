@@ -317,6 +317,24 @@ class TestHBNBCommandEntryPoint(unittest.TestCase):
             pat = r"\d+"
             self.assertFalse(HBNBCommand().onecmd("Place.count()"))
             self.assertRegex(output.getvalue().strip(), pat)
+
+    def test_update_BaseModel(self):
+        """testing the Place.count() command """
+        bm_obj = BaseModel()
+        id = bm_obj.id
+        command = f'BaseModel.update("{id}", "age", "20")'
+        self.assertFalse(HBNBCommand().onecmd(command))
+        self.assertEqual(bm_obj.age, "20")
+        
+    def test_update_User(self):
+        """testing the Place.count() command """
+        bm_obj = User()
+        id = bm_obj.id
+        command = f'User.update("{id}", "age", "20")'
+        self.assertFalse(HBNBCommand().onecmd(command))
+        self.assertEqual(bm_obj.age, "20")
+
+
 if __name__ == "__main__":
     unittest.main()
 
