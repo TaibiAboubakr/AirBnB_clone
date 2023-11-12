@@ -326,13 +326,47 @@ class TestHBNBCommandEntryPoint(unittest.TestCase):
         self.assertFalse(HBNBCommand().onecmd(command))
         self.assertEqual(bm_obj.age, "20")
         
-    def test_update_User(self):
-        """testing the Place.count() command """
-        bm_obj = User()
-        id = bm_obj.id
-        command = f'User.update("{id}", "age", "20")'
-        self.assertFalse(HBNBCommand().onecmd(command))
-        self.assertEqual(bm_obj.age, "20")
+    def test_User_update(self):
+        """Testing update method for User"""
+        user_obj = User()
+        id = user_obj.id
+        user_obj.update("name", "John")
+        self.assertEqual(user_obj.name, "John")
+
+    def test_State_update(self):
+        """Testing update method for State"""
+        state_obj = State()
+        id = state_obj.id
+        state_obj.update("state_name", "California")
+        self.assertEqual(state_obj.state_name, "California")
+
+    def test_City_update(self):
+        """Testing update method for City"""
+        city_obj = City()
+        id = city_obj.id
+        city_obj.update("city_name", "San Francisco")
+        self.assertEqual(city_obj.city_name, "San Francisco")
+
+    def test_Place_update(self):
+        """Testing update method for Place"""
+        place_obj = Place()
+        id = place_obj.id
+        place_obj.update("address", "123 Main St")
+        self.assertEqual(place_obj.address, "123 Main St")
+
+    def test_Amenity_update(self):
+        """Testing update method for Amenity"""
+        amenity_obj = Amenity()
+        id = amenity_obj.id
+        amenity_obj.update("type", "WiFi")
+        self.assertEqual(amenity_obj.type, "WiFi")
+
+    def test_Review_update(self):
+        """Testing update method for Review"""
+        review_obj = Review()
+        id = review_obj.id
+        review_obj.update("rating", "5")
+        self.assertEqual(review_obj.rating, "5")
 
 
 if __name__ == "__main__":
