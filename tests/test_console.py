@@ -368,6 +368,12 @@ class TestHBNBCommandEntryPoint(unittest.TestCase):
         review_obj.update("rating", "5")
         self.assertEqual(review_obj.rating, "5")
 
+    def test_create_missingclass(self):
+        valid = "** class name missing **"
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("create"))
+            self.assertEqaul(valid, output.getvalue().strip())
+
 
 if __name__ == "__main__":
     unittest.main()
