@@ -26,6 +26,17 @@ class TestingBaseModel(unittest.TestCase):
         self.assertIsInstance(theBaseModel.created_at, datetime)
         self.assertIsInstance(theBaseModel.updated_at, datetime)
 
+    def test_str(self):
+        dt = datetime.now()
+        dt_repr = repr(dt)
+        bm = BaseModel()
+        bm.id = "1"
+        bm.created_at = bm.updated_at = dt
+        bmstring = bm.__str__()
+        self.assertIn("[BaseModel] (1)", bmstring)
+        self.assertIn("'id': '1'", bmstring)
+        self.assertIn("'created_at': " + dt_repr, bmstring)
+        self.assertIn("'updated_at': " + dt_repr, bmstring)
 
 if __name__ == "__main__":
     unittest.main()
