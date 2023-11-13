@@ -138,15 +138,6 @@ class TestHBNBCommandEntryPoint(unittest.TestCase):
             self.assertTrue(HBNBCommand().onecmd(f"show BaseModel {inst.id}"))
             self.assertEqual(output.getvalue().strip(), pat)
 
-    def test_destroy_BaseModel(self):
-        """testing the destroy command"""
-        inst1 = BaseModel()
-        command = f"destroy BaseModel {inst1.id}"
-        given = "** no instance found **"
-        with patch('sys.stdout', new=StringIO()) as output:
-            self.assertFalse(HBNBCommand().onecmd(command))
-            self.assertEqual(output.getvalue().strip(), given)
-
     def test_all_BaseModel(self):
         """testing the all command """
         with patch('sys.stdout', new=StringIO()) as output:
@@ -489,6 +480,68 @@ class TestHBNBCommandEntryPoint(unittest.TestCase):
         self.assertFalse(HBNBCommand().onecmd(command))
         self.assertEqual(review_obj.rating, "5")
 
+    def test_destroy_BaseModel(self):
+        """testing the destroy command"""
+        inst1 = BaseModel()
+        command = f"BaseModel.destroy {inst1.id}"
+        given = ""
+        with patch('sys.stdout', new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd(command))
+            self.assertEqual(output.getvalue().strip(), given)
+
+    def test_destroy_User(self):
+        """testing the destroy command"""
+        inst_u = User()
+        command = f"User.destroy {inst_u.id}"
+        given = ""
+        with patch('sys.stdout', new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd(command))
+            self.assertEqual(output.getvalue().strip(), given)
+
+    def test_destroy_City(self):
+        """testing the destroy command"""
+        inst_c = City()
+        command = f"City.destroy {inst_c.id}"
+        given = ""
+        with patch('sys.stdout', new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd(command))
+            self.assertEqual(output.getvalue().strip(), given)
+
+    def test_destroy_Place(self):
+        """testing the destroy command"""
+        inst_p = Place()
+        command = f"Place.destroy {inst_p.id}"
+        given = ""
+        with patch('sys.stdout', new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd(command))
+            self.assertEqual(output.getvalue().strip(), given)
+
+    def test_destroy_State(self):
+        """testing the destroy command"""
+        inst_s = State()
+        command = f"State.destroy {inst_s.id}"
+        given = ""
+        with patch('sys.stdout', new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd(command))
+            self.assertEqual(output.getvalue().strip(), given)
+
+    def test_destroy_Review(self):
+        """testing the destroy command"""
+        inst_r = Review()
+        command = f"Review.destroy {inst_r.id}"
+        given = ""
+        with patch('sys.stdout', new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd(command))
+            self.assertEqual(output.getvalue().strip(), given)
+
+    def test_destroy_Amenity(self):
+        """testing the destroy command"""
+        inst_a = Amenity()
+        command = f"Amenity.destroy {inst_a.id}"
+        given = ""
+        with patch('sys.stdout', new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd(command))
+            self.assertEqual(output.getvalue().strip(), given)
 
 if __name__ == "__main__":
     unittest.main()
