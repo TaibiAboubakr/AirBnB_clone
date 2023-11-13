@@ -59,7 +59,7 @@ class TestingBaseModel(unittest.TestCase):
         bm.id = "1"
         bm.created_at = bm.updated_at = dt
         bm.save()
-        with open ("file.json", "r") as file:
+        with open("file.json", "r") as file:
             data = file.read()
         data = str(data)
         bmdict1 = '"BaseModel.1"'
