@@ -543,5 +543,6 @@ class TestHBNBCommandEntryPoint(unittest.TestCase):
             self.assertFalse(HBNBCommand().onecmd(command))
             self.assertEqual(output.getvalue().strip(), given)
 
+
 if __name__ == "__main__":
     unittest.main()
