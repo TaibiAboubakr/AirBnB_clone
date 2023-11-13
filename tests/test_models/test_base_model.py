@@ -38,5 +38,35 @@ class TestingBaseModel(unittest.TestCase):
         self.assertIn("'created_at': " + dt_repr, bmstring)
         self.assertIn("'updated_at': " + dt_repr, bmstring)
 
+    def test_to_dict(self):
+        dt = datetime.now()
+        bm = BaseModel()
+        bm.id = "1"
+        bm.created_at = bm.updated_at = dt
+        bmdictionary = bm.to_dict()
+        bmdict1 = "{'__class__': 'BaseModel', 'id': '1', 'created_at': "
+        bmdict2 = f"'{dt.isoformat()}', 'updated_at': '{dt.isoformat()}'"
+        self.assertIsInstance(bmdictionary, dict)
+        bmdictionary = str(bm.to_dict())
+        self.assertIn(bmdict1, bmdictionary)
+        self.assertIn(bmdict2, bmdictionary)
+
+    def test_save(self):
+        with open ("file.json", "w") as file:
+            file.write('{}')
+        dt = datetime.now()
+        bm = BaseModel()
+        bm.id = "1"
+        bm.created_at = bm.updated_at = dt
+        bm.save()
+        with open ("file.json", "r") as file:
+            data = file.read()
+        data = str(data)
+        bmdict1 = '"BaseModel.1"'
+        bmdict2 = '"id": "1"'
+        self.assertIn(bmdict1, data)
+        self.assertIn(bmdict2, data)
+
+
 if __name__ == "__main__":
     unittest.main()
