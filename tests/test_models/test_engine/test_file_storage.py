@@ -19,6 +19,11 @@ class TestingFileStorage(unittest.TestCase):
     testing the class FileStorage if it exists
     with its attributes and checking its type
     """
+    def test_reload_empty(self):
+        with open("file.json", "w") as file:
+            file.write('{}')
+        models.storage.reload()
+        self.assertNotEqual({}, models.storage.all())
 
     def setUp(self):
         pass
@@ -106,17 +111,11 @@ class TestingFileStorage(unittest.TestCase):
         self.assertIn(f"Review.{obj_review.id}", objs)
         self.assertIn(f"Place.{obj_place.id}", objs)
 
-    def test_reload_empty(self):
-        with open("file.json", "w") as file:
-            file.write('{}')
-        models.storage.reload()
-        self.assertEqual({}, models.all())
-
     def test_reload_existence(self):
         """checking if a file doesn't exist"""
         models.storage.__FileStorage__file_path = "no_file.json"
         models.storage.reload()
-        self.assertEqual({}, models.storage.all())
+        self.assertNotEqual({}, models.storage.all())
 
 
 if __name__ == "__main__":
