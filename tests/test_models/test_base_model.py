@@ -52,7 +52,7 @@ class TestingBaseModel(unittest.TestCase):
         self.assertIn(bmdict2, bmdictionary)
 
     def test_save(self):
-        with open ("file.json", "w") as file:
+        with open("file.json", "w") as file:
             file.write('{}')
         dt = datetime.now()
         bm = BaseModel()
