@@ -1,3 +1,9 @@
+.container{
+	background-color: aqua;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+}
 section.filters {
 	color: white;
 	height: 70px;
@@ -7,7 +13,6 @@ section.filters {
 	display: flex;
 	align-items: center;
 	position: relative;
-	
 }
 .container .filters button{
 	font-size: 18px;
@@ -21,7 +26,6 @@ section.filters {
 	margin-right: 30px;
 	position: absolute;
 	right : 0;
-
 }
 .container .filters button:hover {
     opacity: 90%;
@@ -32,8 +36,6 @@ width: 25%;
 color: black;
 padding: 0;
 position: relative;
-
-
 }
 .locations{
 	border-right: 1px solid #DDDDDD;
@@ -42,14 +44,12 @@ position: relative;
 	font-weight: 600;
 	margin-bottom: 0;
 	padding-left: 25px;
-
 }
 .locations h4, .amenities h4{
 	font-weight: 400;
 	margin-top: 0;
 	padding-left: 25px;
 }
-
 .popover {
     position: absolute;
     background-color: #FAFAFA;
@@ -60,7 +60,6 @@ position: relative;
     list-style: none;
 	margin: 0;
 	padding: 20px 0;
-	
 }
 
 .locations:hover .popover, .amenities:hover .popover {
